@@ -67,9 +67,6 @@ public class SupplierDAO implements SupplierRepository{
     @Transactional
     public void updateSupplier(Supplier supplier){
         try{
-            if(SupplierById(supplier.getId()) == null){
-                throw new RuntimeException("Supplier not found");
-            }
             supplier.setUpdatedOn(Timestamp.from(Instant.now()));
             em.merge(supplier);
         } catch(PersistenceException e){
@@ -80,12 +77,8 @@ public class SupplierDAO implements SupplierRepository{
     
     @Override
     @Transactional    
-    public void DeleteSupplier(Long id){
+    public void DeleteSupplier(Supplier supplier){
         try{
-            Supplier supplier = SupplierById(id);
-            if(supplier == null){
-                throw new RuntimeException("Supplier not found");
-            }
             em.remove(supplier);
         } catch(PersistenceException e){
             LOGGER.log(Level.SEVERE,"Failed to delete Supplier",e);
