@@ -7,8 +7,12 @@ package neostore.infrastructure.DAO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import neostore.domain.Supplier.Supplier;
 import neostore.domain.Supplier.SupplierRepository;
@@ -27,37 +31,65 @@ public class SupplierDAO implements SupplierRepository{
     Logger LOGGER = Logger.getLogger(SupplierDAO.class.getName());
     
     @Override
-    @Transactional
     public Supplier SupplierById(Long id){
-        return null;
+        try{
+            return em.find(Supplier.class, id);
+        } catch(PersistenceException e){
+            LOGGER.log(Level.SEVERE,"Failed to find Supplier",e);
+            throw new RuntimeException("Failed to find Supplier");
+        }
     }
     
     @Override
     public List<Supplier> ListAllSupplier(){
-        return null;
+        try{
+            return em.createQuery("SELECT s FROM s WHERE s.IsActive = true", Supplier.class).getResultList();
+        } catch (PersistenceException e){
+            LOGGER.log(Level.SEVERE,"Failed to return the Suppliers list",e);            
+            throw new RuntimeException("Failed to return the Suppliers list");
+        }
     }
     
     @Override
     @Transactional
     public void createSupplier(Supplier supplier){
-        
+        try{
+            supplier.setCreatedOn(Timestamp.from(Instant.now()));
+            supplier.setIsActive(true);
+            em.persist(supplier);
+        } catch(PersistenceException e){
+            LOGGER.log(Level.SEVERE,"Failed to create Supplier",e);
+            throw new RuntimeException("Failed to create Supplier");
+        }
     }
     
     @Override
     @Transactional
     public void updateSupplier(Supplier supplier){
-        
-    }
-    
-    @Override
-    @Transactional
-    public void logicalDeleteSupplier(Long id){
-        
+        try{
+            if(SupplierById(supplier.getId()) == null){
+                throw new RuntimeException("Supplier not found");
+            }
+            supplier.setUpdatedOn(Timestamp.from(Instant.now()));
+            em.merge(supplier);
+        } catch(PersistenceException e){
+            LOGGER.log(Level.SEVERE,"Failed to update Supplier",e);
+            throw new RuntimeException("Failed to update Supplier");
+        }
     }
     
     @Override
     @Transactional    
-    public void permanentDeleteSupplier(Long id){
-        
+    public void DeleteSupplier(Long id){
+        try{
+            Supplier supplier = SupplierById(id);
+            if(supplier == null){
+                throw new RuntimeException("Supplier not found");
+            }
+            em.remove(supplier);
+        } catch(PersistenceException e){
+            LOGGER.log(Level.SEVERE,"Failed to delete Supplier",e);
+            throw new RuntimeException("Failed to delete Supplier");
+        }
     }
 }

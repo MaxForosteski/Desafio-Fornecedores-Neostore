@@ -15,6 +15,5 @@ public interface SupplierRepository {
     List<Supplier> ListAllSupplier();
     void updateSupplier(Supplier supplier);
     void createSupplier(Supplier supplier);
-    void logicalDeleteSupplier(Long id);
-    void permanentDeleteSupplier(Long id);
+    void DeleteSupplier(Long id);
 }
