@@ -18,28 +18,33 @@ import neostore.domain.Supplier.SupplierRepository;
  */
 @ApplicationScoped
 public class SupplierService {
-    private final SupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository;
     
+    // Construtor sem parâmetros
+    public SupplierService() {
+    }
+
+    // CDI vai injetar a dependência automaticamente no campo
     @Inject
-    public SupplierService(SupplierRepository supplierRepository) {
+    public void setSupplierRepository(SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
     }
     
-    public void createSupplier(Supplier supplier) {
+    public void createSupplierWrapper(Supplier supplier) {
         supplier.setIsActive(true);
         supplier.setCreatedOn(Timestamp.from(Instant.now()));
         supplierRepository.createSupplier(supplier);
     }
     
-    public Supplier getSupplierById(Long id) {
+    public Supplier getSupplierByIdWrapper(Long id) {
         return supplierRepository.SupplierById(id);
     }
     
-    public List<Supplier> getAllSuppliersList() {
+    public List<Supplier> getAllSuppliersListWrapper() {
         return supplierRepository.ListAllSupplier();
     }
     
-    public void updateSupplier(Supplier newSupplier) {
+    public void updateSupplierWrapper(Supplier newSupplier) {
         Supplier supplier = supplierRepository.SupplierById(newSupplier.getId());
         if (supplier == null) {
             throw new RuntimeException("Not found supplier");
@@ -47,7 +52,7 @@ public class SupplierService {
         supplierRepository.updateSupplier(newSupplier);
     }
     
-    public void logicalDeleteSupplier(Long id) {
+    public void logicalDeleteSupplierWrapper(Long id) {
         Supplier supplier = supplierRepository.SupplierById(id);
         if (supplier == null) {
             throw new RuntimeException("Not found supplier");
@@ -56,7 +61,7 @@ public class SupplierService {
         supplierRepository.updateSupplier(supplier);
     }
     
-    public void permanentDeleteSupplier(Long id){
+    public void permanentDeleteSupplierWrapper(Long id){
         Supplier supplier = supplierRepository.SupplierById(id);
         if(supplier == null){
             throw new RuntimeException("Not found supplier");

@@ -7,6 +7,7 @@ package neostore.infrastructure.DAO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
@@ -25,10 +26,15 @@ import neostore.domain.Supplier.SupplierRepository;
 @ApplicationScoped
 public class SupplierDAO implements SupplierRepository{
     
-    @Inject
+    @PersistenceContext(unitName = "myPU")
     private EntityManager em;
     
-    Logger LOGGER = Logger.getLogger(SupplierDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SupplierDAO.class.getName());
+
+    public SupplierDAO() {
+    }
+    
+    
     
     @Override
     public Supplier SupplierById(Long id){
