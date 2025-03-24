@@ -49,7 +49,7 @@ public class SupplierDAO implements SupplierRepository{
     @Override
     public List<Supplier> ListAllSupplier(){
         try{
-            return em.createQuery("SELECT s FROM s WHERE s.IsActive = true", Supplier.class).getResultList();
+            return em.createQuery("SELECT s FROM Supplier s WHERE s.IsActive = true", Supplier.class).getResultList();
         } catch (PersistenceException e){
             LOGGER.log(Level.SEVERE,"Failed to return the Suppliers list",e);            
             throw new RuntimeException("Failed to return the Suppliers list");

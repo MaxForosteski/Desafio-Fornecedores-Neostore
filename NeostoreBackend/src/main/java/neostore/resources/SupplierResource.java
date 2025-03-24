@@ -21,7 +21,7 @@ import neostore.domain.Supplier.Supplier;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class SuppplierResource {
+public class SupplierResource {
 
     @Inject
     private SupplierService supplierService;
