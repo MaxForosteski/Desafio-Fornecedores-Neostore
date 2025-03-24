@@ -1,0 +1,24 @@
+/*Common classes*/
+.flex{
+  display: flex;
+}
+
+.justify-space-around{
+  justify-content: space-around;
+}
+
+.ml-10{
+  margin-left: 10px;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.items-center{
+  align-items: center;
+}
+
+.bg-white{
+  background-color: white;
+}
