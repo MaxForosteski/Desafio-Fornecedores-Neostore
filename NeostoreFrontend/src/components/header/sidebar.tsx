@@ -7,10 +7,9 @@ import { FaBoxOpen } from "react-icons/fa6";
 // Container principal da sidebar
 const SidebarContainer = styled.div<{ aberto: boolean }>`
   width: ${(props) => (props.aberto ? "350px" : "90px")};
-  height: 100vh;
+  height: 98vh;
   background-color:rgb(0, 49, 99);
   color: white;
-  position: fixed;
   left: 0;
   top: 0;
   transition: width 0.2s ease-in-out;
@@ -29,6 +28,7 @@ const ToggleButton = styled.button`
   padding: 10px;
   text-align: center;
   height: 50px;
+  z-index:100;
 `;
 
 // Estilizando os links da sidebar
