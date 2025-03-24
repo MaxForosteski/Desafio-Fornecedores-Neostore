@@ -6,9 +6,12 @@ function App() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex width-full height-full">
         <Sidebar />
-        <ScreenHead />
+        <div className="flex flex-grow flex-row">
+          <ScreenHead />
+        </div>
+
       </div>
 
     </>
