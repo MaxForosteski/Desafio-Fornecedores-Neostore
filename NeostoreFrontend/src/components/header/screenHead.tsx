@@ -19,7 +19,7 @@
     const ScreenHeadContainer = styled.div`
         display: flex;
         flex-grow: 1;
-        width: 100%;
+        width: auto;
         height: 14%;
         justify-content: space-between;
         flex-direction: row;
@@ -41,7 +41,7 @@
     const User = styled.button`
         border: solid 1px rgb(116, 116, 116);
         background: white;
-        color:black;
+        color:black;-
         padding: 10px;
         font-size: 18px;
         border-radius: 10px;
