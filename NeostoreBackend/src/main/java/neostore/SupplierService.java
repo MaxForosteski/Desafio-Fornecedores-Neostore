@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore.application;
+package neostore;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
-import neostore.domain.Supplier.Supplier;
-import neostore.domain.Supplier.SupplierRepository;
+import neostore.Supplier;
+import neostore.SupplierRepository;
 
 /**
  *
