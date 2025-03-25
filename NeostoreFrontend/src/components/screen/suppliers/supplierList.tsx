@@ -49,12 +49,19 @@ const API_URL_GET_ALL_SUPPLIERS = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS
 
 const SupplierList: React.FC = () => {
     const [data, setData] = useState<Supplier[]>([]);
+    const [paginatedData, setPaginatedData] = useState<Supplier[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
+    const [maxRecord, setMaxRecords] = useState(0);
+    const [startIndex, setStartIndex] = useState(0);
+
+
 
     useEffect(() => {
+        setMaxRecords(5);
+
         axios
-            .get(API_URL_GET_ALL_SUPPLIERS)
+            .get<Supplier[]>(API_URL_GET_ALL_SUPPLIERS)
             .then((response) => {
                 setData(response.data)
                 setLoading(false)
@@ -79,11 +86,13 @@ const SupplierList: React.FC = () => {
                         <SupplierTableHead>Descrição</SupplierTableHead>
                     </tr>
                 </thead>
+
                 <tbody>
-                    {loading ? <p>Carregando</p> : null}
-                    {error ? error : null}
-                    {data != null ? data.map((item) => {
-                        return (
+
+                    {paginatedData != null ? data
+                        .filter((_, index) => index >= startIndex && index < startIndex + maxRecord)
+                        .map((item) => (
+
                             <TableRow>
                                 <SupplierTableLine>{item.name}</SupplierTableLine>
                                 <SupplierTableLine>{item.email}</SupplierTableLine>
@@ -91,19 +100,30 @@ const SupplierList: React.FC = () => {
                                 <SupplierTableLine>{item.description}</SupplierTableLine>
                             </TableRow>
                         )
-                    }) : null}
+                        )
+                        : null}
                 </tbody>
             </SupplierTable>
+            {loading ? <p>Carregando</p> : null}
+            {error ? error : null}
 
             <Pagination>
                 <div>
-                    <p>1 a 1 de 1 item</p>
+                    <p>{startIndex + 1} a {startIndex + maxRecord} de {data.length} itens</p>
                 </div>
-
                 <div className="flex flex-row">
-                    <button><FaChevronLeft /></button>
-                    <p className="ml-10">1</p>
-                    <button className="ml-10"><FaChevronRight /></button>
+                    <button onClick={() => {
+                        if (startIndex > 0) {
+                            setStartIndex(startIndex - maxRecord)
+                            setPaginatedData(data.slice(startIndex, (startIndex + maxRecord)))
+                        }
+                    }}><FaChevronLeft /></button>
+                    <button onClick={() => {
+                        if ((startIndex + maxRecord) < data.length) {
+                            setStartIndex(startIndex + maxRecord)
+                            setPaginatedData(data.slice(startIndex, (startIndex + maxRecord)))
+                        }
+                    }} className="ml-10"><FaChevronRight /></button>
                 </div>
             </Pagination>
 

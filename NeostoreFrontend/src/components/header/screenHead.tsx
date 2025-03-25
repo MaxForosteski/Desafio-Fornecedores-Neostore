@@ -34,7 +34,7 @@
         margin-left: 20px;
     `;
 
-    const Title = styled.h3`
+    const Title = styled.b`
         font-size: 34px;
     `;
 
@@ -59,7 +59,7 @@
 
                     <ReturnButton><FaArrowLeft /></ReturnButton>
 
-                    <div className="flex justify-center items-center flex-column ml-30">
+                    <div className="flex justify-space-between items-center flex-column ml-30">
 
                         <Breadcrumbs>Página Inicial &gt; Fornecedores</Breadcrumbs>
                         <Title>Fornecedores</Title>
