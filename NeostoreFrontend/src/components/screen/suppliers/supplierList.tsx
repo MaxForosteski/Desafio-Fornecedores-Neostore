@@ -45,11 +45,17 @@ const Pagination = styled.div`
     margin: 20px;
 `;
 
+interface SupplierListProps{
+    searchQuery: string;
+}
+
 const API_URL_GET_ALL_SUPPLIERS = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS;
 
-const SupplierList: React.FC = () => {
+const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
     const [data, setData] = useState<Supplier[]>([]);
-    const [paginatedData, setPaginatedData] = useState<Supplier[]>([]);
+    const [filteredData, setFilteredData] = useState<Supplier[]>([]);
+    const [paginatedData,setPaginatedData] = useState<Supplier[]>([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
     const [maxRecord, setMaxRecords] = useState(0);
@@ -74,6 +80,13 @@ const SupplierList: React.FC = () => {
 
         , []);
 
+
+    useEffect(()=>{
+        const filtered = data.filter(data =>
+            data.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredData(filtered)
+    },[searchQuery,data])
     return (
 
         <>
@@ -89,7 +102,7 @@ const SupplierList: React.FC = () => {
 
                 <tbody>
 
-                    {paginatedData != null ? data
+                    {searchQuery == "" ? data
                         .filter((_, index) => index >= startIndex && index < startIndex + maxRecord)
                         .map((item) => (
 
@@ -101,7 +114,18 @@ const SupplierList: React.FC = () => {
                             </TableRow>
                         )
                         )
-                        : null}
+                        : filteredData
+                        .filter((_, index) => index >= startIndex && index < startIndex + maxRecord)
+                        .map((item) => (
+
+                            <TableRow>
+                                <SupplierTableLine>{item.name}</SupplierTableLine>
+                                <SupplierTableLine>{item.email}</SupplierTableLine>
+                                <SupplierTableLine>{item.cnpj}</SupplierTableLine>
+                                <SupplierTableLine>{item.description}</SupplierTableLine>
+                            </TableRow>
+                        )
+                        )}
                 </tbody>
             </SupplierTable>
             {loading ? <p>Carregando</p> : null}
@@ -109,19 +133,19 @@ const SupplierList: React.FC = () => {
 
             <Pagination>
                 <div>
-                    <p>{startIndex + 1} a {startIndex + maxRecord} de {data.length} itens</p>
+                    {searchQuery == null ? <p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? data.length : (startIndex + maxRecord)} de {data.length} itens</p>:<p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? filteredData.length : (startIndex + maxRecord)} de {filteredData.length} itens</p>}
                 </div>
                 <div className="flex flex-row">
                     <button onClick={() => {
                         if (startIndex > 0) {
                             setStartIndex(startIndex - maxRecord)
-                            setPaginatedData(data.slice(startIndex, (startIndex + maxRecord)))
+                            data.slice(startIndex, (startIndex + maxRecord))
                         }
                     }}><FaChevronLeft /></button>
                     <button onClick={() => {
                         if ((startIndex + maxRecord) < data.length) {
                             setStartIndex(startIndex + maxRecord)
-                            setPaginatedData(data.slice(startIndex, (startIndex + maxRecord)))
+                            data.slice(startIndex, (startIndex + maxRecord))
                         }
                     }} className="ml-10"><FaChevronRight /></button>
                 </div>

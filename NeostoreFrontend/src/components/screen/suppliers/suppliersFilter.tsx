@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import SupplierList from "./supplierList";
+import { useState } from "react";
 
 const SupplierListContainer = styled.div`
     display: flex;
@@ -51,14 +52,23 @@ const ButtonNewSupplier = styled.button`
 
 
 const SupplierFilter: React.FC = () => {
+    const [searchQuery, setSearchQuery] = useState("");
     return (
         <SupplierListContainer>
             <Actions>
-                <InputFilter type="text" placeholder="Filtrar por nome" />
+                <InputFilter
+                    id="search"
+                    value={searchQuery}
+                    onChange={(event) => {
+                        setSearchQuery(event?.target.value)
+                    }}
+                    type="text" placeholder="Filtrar por nome" />
                 <ButtonNewSupplier><FaPlus className="mr-10" />Novo</ButtonNewSupplier>
             </Actions>
+            <div className="mt-10">
+                <SupplierList searchQuery={searchQuery} />
+            </div>
 
-            <SupplierList/>
 
 
         </SupplierListContainer>
