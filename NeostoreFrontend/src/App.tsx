@@ -1,7 +1,7 @@
 import './App.css'
 import Sidebar from './components/header/sidebar'
 import ScreenHead from './components/header/screenHead'
-import SupplierList from './components/screen/suppliers/suppliersList'
+import SupplierFilter from './components/screen/suppliers/suppliersFilter'
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
         <Sidebar />
         <div className="flex flex-grow flex-column">
           <ScreenHead />
-          <SupplierList/>
+          <SupplierFilter/>
         </div>
       </div>
 

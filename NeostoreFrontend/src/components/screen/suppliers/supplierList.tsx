@@ -1,53 +1,9 @@
 import styled from "styled-components";
-import { FaPlus } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
-
-const SupplierListContainer = styled.div`
-    display: flex;
-    flex-grow: 1;
-    height: 86%;
-    width: auto;
-    padding: 20px;
-    flex-direction: column;
-`;
-
-const InputFilter = styled.input`
-    width: 30%;
-    height: 30px;
-    border-radius: 10px;
-    border: solid 1px rgb(173, 173, 173);
-    padding: 10px;
-    margin: 10px;
-    font-size: 18px;
-    background: white;
-    color: black;
-    ::placeholder {
-        color: black;
-    }
-    &:focus {
-        border-color: black ;
-    }
-`;
-const Actions = styled.div`
-    display: flex;
-    margin:20px;
-    align-items: center;
-    height: 50px;
-    justify-content: space-between;
-`;
-const ButtonNewSupplier = styled.button`
-    border: solid 1px rgb(116, 116, 116);
-    background: rgb(31, 141, 55);
-    color:white;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 10px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Supplier } from "../../../type/supplier";
 
 const SupplierTable = styled.table`
     width: 100%;
@@ -89,14 +45,31 @@ const Pagination = styled.div`
     margin: 20px;
 `;
 
-const SupplierList: React.FC = () => {
-    return (
-        <SupplierListContainer>
-            <Actions>
-                <InputFilter type="text" placeholder="Filtrar por nome" />
-                <ButtonNewSupplier><FaPlus className="mr-10" />Novo</ButtonNewSupplier>
-            </Actions>
+const API_URL_GET_ALL_SUPPLIERS = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS;
 
+const SupplierList: React.FC = () => {
+    const [data, setData] = useState<Supplier[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        axios
+            .get(API_URL_GET_ALL_SUPPLIERS)
+            .then((response) => {
+                setData(response.data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                setError(error)
+                setLoading(false)
+            })
+    }
+
+        , []);
+
+    return (
+
+        <>
             <SupplierTable>
                 <thead>
                     <tr>
@@ -106,14 +79,19 @@ const SupplierList: React.FC = () => {
                         <SupplierTableHead>Descrição</SupplierTableHead>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <TableRow>
-                        <SupplierTableLine>NeoStore</SupplierTableLine>
-                        <SupplierTableLine>Neo@gmail</SupplierTableLine>
-                        <SupplierTableLine>123456789</SupplierTableLine>
-                        <SupplierTableLine>Descrição</SupplierTableLine>
-                    </TableRow>
+                    {loading ? <p>Carregando</p> : null}
+                    {error ? error : null}
+                    {data != null ? data.map((item) => {
+                        return (
+                            <TableRow>
+                                <SupplierTableLine>{item.name}</SupplierTableLine>
+                                <SupplierTableLine>{item.email}</SupplierTableLine>
+                                <SupplierTableLine>{item.cnpj}</SupplierTableLine>
+                                <SupplierTableLine>{item.description}</SupplierTableLine>
+                            </TableRow>
+                        )
+                    }) : null}
                 </tbody>
             </SupplierTable>
 
@@ -129,8 +107,7 @@ const SupplierList: React.FC = () => {
                 </div>
             </Pagination>
 
-
-        </SupplierListContainer>
+        </>
     )
 }
 
