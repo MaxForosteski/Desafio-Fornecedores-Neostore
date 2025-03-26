@@ -11,13 +11,15 @@ public class Email {
     private final String value;
 
     public Email(String value) {
-        if (value == null) {
+        String cleanEmail = value.replaceAll("\\s+", ""); //Limpa todos os espaços em branco
+        if (cleanEmail == null) {
             throw new IllegalArgumentException("Email can't be null");
         }
-        if (!EMAIL_PATTERN.matcher(value).matches()) {
+        if (!EMAIL_PATTERN.matcher(cleanEmail).matches()) {
             throw new IllegalArgumentException("Invalid Email:" + value);
         }
-        this.value = value;
+        
+        this.value = cleanEmail;
     }
 
     public String getValue() {

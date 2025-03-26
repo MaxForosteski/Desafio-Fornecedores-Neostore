@@ -5,6 +5,8 @@ neostore\CNPJ.class
 neostore\JakartaRestConfiguration.class
 neostore\SupplierResource.class
 neostore\EmailJpaConverter.class
+neostore\CNPJAdapter.class
+neostore\CNPJConverter.class
 neostore\Supplier.class
 neostore\CorsFilter.class
 neostore\SupplierDAO.class

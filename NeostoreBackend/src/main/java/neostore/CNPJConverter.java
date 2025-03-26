@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package neostore;
 
-/**
- *
- * @author max.silva
- */
-public class CNPJConverter {
-    
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+
+@Converter(autoApply = true)
+public class CNPJConverter implements AttributeConverter<CNPJ, String> {
+    @Override
+    public String convertToDatabaseColumn(CNPJ cnpj) {
+        return cnpj != null ? cnpj.getValue() : null;
+    }
+
+    @Override
+    public CNPJ convertToEntityAttribute(String value) {
+        return value != null ? new CNPJ(value) : null;
+    }
 }

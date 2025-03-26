@@ -25,13 +25,13 @@ public class SupplierResource {
 
     @Inject
     private SupplierService supplierService;
-    
+
     @GET
     @Path("/teste")
-    public Response teste(){
+    public Response teste() {
         return Response.ok("teste").build();
     }
-    
+
     @GET
     @Path("/{id}")
     public Response SupplierById(@PathParam("id") Long id) {
@@ -46,6 +46,26 @@ public class SupplierResource {
     @GET
     public List<Supplier> SupplierListAll() {
         return supplierService.getAllSuppliersListWrapper();
+    }
+
+    @POST
+    @Path("/import")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response importSuppliers(List<Supplier> suppliers) {
+        try {
+            supplierService.importSuppliers(suppliers);
+            return Response.status(Response.Status.CREATED)
+                    .entity("Fornecedores importados com sucesso: " + suppliers.size())
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro ao importar fornecedores: " + e.getMessage())
+                    .build();
+        }
     }
 
     @POST

@@ -6,6 +6,8 @@ package neostore;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -22,7 +24,9 @@ public class SupplierService {
 
     @Inject
     private SupplierRepository supplierRepository;
-
+    
+    @Inject
+    
     public void createSupplierWrapper(Supplier supplier) {
         
             supplier.setIsActive(true);
@@ -62,5 +66,16 @@ public class SupplierService {
             throw new RuntimeException("Not found supplier");
         }
         supplierRepository.DeleteSupplier(supplier);
+    }
+    
+    @Transactional
+    public void importSuppliers(List<Supplier> suppliers) {
+        if (suppliers == null || suppliers.isEmpty()) {
+            throw new IllegalArgumentException("A lista de fornecedores não pode ser nula ou vazia");
+        }
+
+        for (Supplier supplier : suppliers) {
+            createSupplierWrapper(supplier);
+        }
     }
 }
