@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import SupplierList from "./supplierList";
 import { useState } from "react";
+import CreateUpdateSupplierPopup from "./createUpdateSupplierPopup";
 
 const SupplierListContainer = styled.div`
     display: flex;
@@ -53,6 +54,16 @@ const ButtonNewSupplier = styled.button`
 
 const SupplierFilter: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [isCreateUpdateSupplierPopupOpen, setIsCreateUpdateSupplierPopupOpen] = useState(false);
+
+    function onCloseCreateUpdateSupplierPopup() {
+        
+    }
+
+    function onConfirmCreateUpdateSupplierPopup() {
+        
+    }
+
     return (
         <SupplierListContainer>
             <Actions>
@@ -63,13 +74,13 @@ const SupplierFilter: React.FC = () => {
                         setSearchQuery(event?.target.value)
                     }}
                     type="text" placeholder="Filtrar por nome" />
-                <ButtonNewSupplier><FaPlus className="mr-10" />Novo</ButtonNewSupplier>
+                <ButtonNewSupplier onClick={()=>{setIsCreateUpdateSupplierPopupOpen(true)}}><FaPlus className="mr-10" />Novo</ButtonNewSupplier>
             </Actions>
             <div className="mt-10">
                 <SupplierList searchQuery={searchQuery} />
             </div>
 
-
+            <CreateUpdateSupplierPopup isOpen={isCreateUpdateSupplierPopupOpen} onClose={onCloseCreateUpdateSupplierPopup} onConfirm={onConfirmCreateUpdateSupplierPopup} Supplier={null}/>
 
         </SupplierListContainer>
     )

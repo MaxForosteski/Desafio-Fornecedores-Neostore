@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Supplier } from "../../../type/supplier";
-import process from "process";
+import { FaTrashAlt } from "react-icons/fa";
+import { MdModeEdit } from "react-icons/md";
+import DeleteConfirm from "../../common/deleteConfirmation";
+import refreshSupplier from "../actions/refreshSupplier";
+import deleteSupplier from "../actions/deleteSupplier";
 
 const SupplierTable = styled.table`
     width: 100%;
@@ -46,59 +49,91 @@ const Pagination = styled.div`
     margin: 20px;
 `;
 
-interface SupplierListProps{
+interface SupplierListProps {
     searchQuery: string;
 }
 
 
+const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
 
-const VITE_API_URL_GET_ALL_SUPPLIERS: string | undefined = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS;
-const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
     const [data, setData] = useState<Supplier[]>([]);
     const [filteredData, setFilteredData] = useState<Supplier[]>([]);
-    const [paginatedData,setPaginatedData] = useState<Supplier[]>([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
+
     const [maxRecord, setMaxRecords] = useState(0);
     const [startIndex, setStartIndex] = useState(0);
 
+    const [isOpenDelete, setIsOpenDelete] = useState(false);
+    const [selectedItemDelete, setSelectedItemDelete] = useState<Supplier | null>(null);
 
+    function onOpenDeletePopup(supplier: Supplier):void {
+        setIsOpenDelete(true);
+        setSelectedItemDelete(supplier);
+    }
+
+    function onConfirmDeletePopup():void {
+        if (selectedItemDelete) {
+            deleteSupplier(selectedItemDelete).then(() => {
+                refreshSupplier().then((suppliers) => {
+                    setData(suppliers);
+                    setLoading(false);
+                }).catch((err) => {
+                    setError(err.message);
+                    setLoading(false);
+                });
+            }).catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
+            onCloseDeletePopup();
+        } else {
+            console.error("Error deleting supplier: supplier is null");
+        }
+        
+    }
+
+    function onCloseDeletePopup():void {
+        setIsOpenDelete(false);
+        setSelectedItemDelete(null);
+
+        refreshSupplier().then((suppliers) => {
+            setData(suppliers);
+            setLoading(false);
+        }).catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        });
+
+    }
 
     useEffect(() => {
         setMaxRecords(5);
-
-        if (VITE_API_URL_GET_ALL_SUPPLIERS) {
-            axios
-            .get<Supplier[]>(VITE_API_URL_GET_ALL_SUPPLIERS)
-            .then((response) => {
-                setData(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error.message || "Erro ao carregar os dados");
-                setLoading(false);
-            });
-        } else {
+        refreshSupplier().then((suppliers) => {
+            setData(suppliers);
             setLoading(false);
-        }
-    }
+        }).catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        });
+    }, []);
 
-        , []);
-
-
-    useEffect(()=>{
+    useEffect(() => {
         const filtered = data.filter(data =>
             data.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredData(filtered)
-    },[searchQuery,data])
+    }, [searchQuery, data])
+
+
     return (
 
         <>
             <SupplierTable>
                 <thead>
                     <tr>
+                        <SupplierTableHead></SupplierTableHead>
                         <SupplierTableHead>Nome</SupplierTableHead>
                         <SupplierTableHead>Email</SupplierTableHead>
                         <SupplierTableHead>CNPJ</SupplierTableHead>
@@ -113,6 +148,11 @@ const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
                         .map((item) => (
 
                             <TableRow>
+                                <SupplierTableLine className="font-size-20 text-center"><FaTrashAlt className="color-red" onClick={
+                                    () => {
+                                        onOpenDeletePopup(item);
+                                    }
+                                } /> <MdModeEdit className="ml-30" /> </SupplierTableLine>
                                 <SupplierTableLine>{item.name}</SupplierTableLine>
                                 <SupplierTableLine>{item.email}</SupplierTableLine>
                                 <SupplierTableLine>{item.cnpj}</SupplierTableLine>
@@ -121,28 +161,34 @@ const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
                         )
                         )
                         : filteredData
-                        .filter((_, index) => index >= startIndex && index < startIndex + maxRecord)
-                        .map((item) => (
+                            .filter((_, index) => index >= startIndex && index < startIndex + maxRecord)
+                            .map((item) => (
 
-                            <TableRow>
-                                <SupplierTableLine>{item.name}</SupplierTableLine>
-                                <SupplierTableLine>{item.email}</SupplierTableLine>
-                                <SupplierTableLine>{item.cnpj}</SupplierTableLine>
-                                <SupplierTableLine>{item.description}</SupplierTableLine>
-                            </TableRow>
-                        )
-                        )}
+                                <TableRow>
+                                    <SupplierTableLine className="font-size-20 text-center"><FaTrashAlt className="color-red" onClick={
+                                        () => {
+                                            onOpenDeletePopup(item);
+                                        }
+                                    } /> <MdModeEdit className="ml-30" /></SupplierTableLine>
+                                    <SupplierTableLine>{item.name}</SupplierTableLine>
+                                    <SupplierTableLine>{item.email}</SupplierTableLine>
+                                    <SupplierTableLine>{item.cnpj}</SupplierTableLine>
+                                    <SupplierTableLine>{item.description}</SupplierTableLine>
+                                </TableRow>
+                            )
+                            )}
                 </tbody>
             </SupplierTable>
+
             {loading ? <p>Carregando</p> : null}
             {error ? error : null}
 
             <Pagination>
                 <div>
-                    {searchQuery == null ? 
-                    <p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? data.length : (startIndex + maxRecord)} de {data.length} itens</p>
-                    :
-                    <p>{startIndex + 1} a {(startIndex + maxRecord) > filteredData.length ? filteredData.length : (startIndex + maxRecord)} de {filteredData.length} itens</p>}
+                    {searchQuery == null ?
+                        <p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? data.length : (startIndex + maxRecord)} de {data.length} itens</p>
+                        :
+                        <p>{startIndex + 1} a {(startIndex + maxRecord) > filteredData.length ? filteredData.length : (startIndex + maxRecord)} de {filteredData.length} itens</p>}
                 </div>
                 <div className="flex flex-row">
                     <button onClick={() => {
@@ -160,6 +206,7 @@ const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
                 </div>
             </Pagination>
 
+            <DeleteConfirm isOpen={isOpenDelete} onClose={onCloseDeletePopup} onConfirm={onConfirmDeletePopup}/>
         </>
     )
 }

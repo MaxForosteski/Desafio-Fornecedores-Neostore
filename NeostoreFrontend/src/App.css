@@ -71,3 +71,19 @@
 .font-size-30{
   font-size: 30px;
 }
+
+.text-center{
+  text-align: center;
+}
+
+.text-justify{
+  text-align: justify;
+}
+
+.font-size-20{
+  font-size: 20px;
+}
+
+.color-red{
+  color: red;
+}
