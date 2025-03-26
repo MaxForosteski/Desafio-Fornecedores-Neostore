@@ -1,8 +1,9 @@
-neostore\application\SupplierService.class
-neostore\resources\SupplierResource.class
-neostore\domain\VO\CNPJ.class
-neostore\resources\JakartaEE11Resource.class
-neostore\domain\Supplier\Supplier.class
-neostore\infrastructure\DAO\SupplierDAO.class
-neostore\resources\JakartaRestConfiguration.class
-neostore\domain\Supplier\SupplierRepository.class
+neostore\Supplier.class
+neostore\SupplierService.class
+neostore\JakartaEE11Resource.class
+neostore\CorsFilter.class
+neostore\SupplierDAO.class
+neostore\SupplierRepository.class
+neostore\CNPJ.class
+neostore\JakartaRestConfiguration.class
+neostore\SupplierResource.class

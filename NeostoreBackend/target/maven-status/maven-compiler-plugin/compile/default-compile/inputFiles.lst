@@ -1,8 +1,9 @@
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\application\SupplierService.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\domain\Supplier\Supplier.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\domain\Supplier\SupplierRepository.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\domain\VO\CNPJ.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\infrastructure\DAO\SupplierDAO.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\resources\JakartaEE11Resource.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\resources\JakartaRestConfiguration.java
-C:\Users\Everto_Clewito_Riber\Desktop\codigos\Neostore\NeostoreBackend\src\main\java\neostore\resources\SupplierResource.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\CNPJ.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\CorsFilter.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\JakartaEE11Resource.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\JakartaRestConfiguration.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\Supplier.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\SupplierDAO.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\SupplierRepository.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\SupplierResource.java
+C:\Users\max.silva\Desktop\Projetos\prof\dnsf\Desafio-Fornecedores-Neostore\NeostoreBackend\src\main\java\neostore\SupplierService.java

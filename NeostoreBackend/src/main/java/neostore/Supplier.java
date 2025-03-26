@@ -7,8 +7,7 @@ package neostore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import neostore.domain.VO.CNPJ;
+import java.time.ZonedDateTime;
 
 /**
  *
@@ -16,7 +15,7 @@ import neostore.domain.VO.CNPJ;
  */
 
 @Entity
-@Table(name = "supplier")
+@Table(name = "supplier", schema = "public")
 public class Supplier {
     
     @Id
@@ -45,11 +44,10 @@ public class Supplier {
     
     @Column(name="created_on", nullable = false)
     @NotNull(message = "CreatedOn cannot be null")
-    private Timestamp createdOn;
+    private ZonedDateTime createdOn;
     
-    @Column(name="updated_on", nullable = false)
-    @NotNull(message = "UpdatedOn cannot be null")
-    private Timestamp UpdatedOn;
+    @Column(name="updated_on", nullable = true)
+    private ZonedDateTime UpdatedOn;
 
     public Supplier() {
         
@@ -103,19 +101,19 @@ public class Supplier {
         this.isActive = isActive;
     }
 
-    public Timestamp getCreatedOn() {
+    public ZonedDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
+    public void setCreatedOn(ZonedDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
-    public Timestamp getUpdatedOn() {
+    public ZonedDateTime getUpdatedOn() {
         return UpdatedOn;
     }
 
-    public void setUpdatedOn(Timestamp UpdatedOn) {
+    public void setUpdatedOn(ZonedDateTime UpdatedOn) {
         this.UpdatedOn = UpdatedOn;
     }
     

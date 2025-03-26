@@ -8,6 +8,7 @@ import { MdModeEdit } from "react-icons/md";
 import DeleteConfirm from "../../common/deleteConfirmation";
 import refreshSupplier from "../actions/refreshSupplier";
 import deleteSupplier from "../actions/deleteSupplier";
+import CreateUpdateSupplierPopup from "./createUpdateSupplierPopup";
 
 const SupplierTable = styled.table`
     width: 100%;
@@ -51,10 +52,11 @@ const Pagination = styled.div`
 
 interface SupplierListProps {
     searchQuery: string;
+    isRefresh: boolean;
 }
 
 
-const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
+const SupplierList: React.FC<SupplierListProps> = ({ searchQuery, isRefresh }) => {
 
     const [data, setData] = useState<Supplier[]>([]);
     const [filteredData, setFilteredData] = useState<Supplier[]>([]);
@@ -68,12 +70,32 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
     const [isOpenDelete, setIsOpenDelete] = useState(false);
     const [selectedItemDelete, setSelectedItemDelete] = useState<Supplier | null>(null);
 
-    function onOpenDeletePopup(supplier: Supplier):void {
+    const [isCreateUpdateSupplierPopupOpen, setIsCreateUpdateSupplierPopupOpen] = useState(false);
+    const [selectedItemUpdate, setSelectedItemUpdate] = useState<Supplier | null>(null);
+
+
+    function onOpenDeletePopup(supplier: Supplier): void {
         setIsOpenDelete(true);
         setSelectedItemDelete(supplier);
     }
 
-    function onConfirmDeletePopup():void {
+    function refreshSuppliersWrapper(){
+        refreshSupplier().then((suppliers) => {
+            setData(suppliers);
+            setLoading(false);
+        }).catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        });
+    }
+
+    function editOnClick(supplier:Supplier):void{
+        setSelectedItemUpdate(supplier);
+        setIsCreateUpdateSupplierPopupOpen(true);
+
+    }
+
+    function onConfirmDeletePopup(): void {
         if (selectedItemDelete) {
             deleteSupplier(selectedItemDelete).then(() => {
                 refreshSupplier().then((suppliers) => {
@@ -91,32 +113,26 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
         } else {
             console.error("Error deleting supplier: supplier is null");
         }
-        
+
     }
 
-    function onCloseDeletePopup():void {
+    function onCloseCreateUpdateSupplierPopup() {
+        setIsCreateUpdateSupplierPopupOpen(false)
+    }
+
+    function onConfirmCreateUpdateSupplierPopup() {
+        setIsCreateUpdateSupplierPopupOpen(false)
+        refreshSuppliersWrapper();
+    }
+
+    function onCloseDeletePopup(): void {
         setIsOpenDelete(false);
         setSelectedItemDelete(null);
-
-        refreshSupplier().then((suppliers) => {
-            setData(suppliers);
-            setLoading(false);
-        }).catch((err) => {
-            setError(err.message);
-            setLoading(false);
-        });
-
     }
 
     useEffect(() => {
         setMaxRecords(5);
-        refreshSupplier().then((suppliers) => {
-            setData(suppliers);
-            setLoading(false);
-        }).catch((err) => {
-            setError(err.message);
-            setLoading(false);
-        });
+        refreshSuppliersWrapper();
     }, []);
 
     useEffect(() => {
@@ -126,6 +142,10 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
         setFilteredData(filtered)
     }, [searchQuery, data])
 
+
+    useEffect(() => {
+        refreshSuppliersWrapper();
+    }, [isRefresh])
 
     return (
 
@@ -152,7 +172,11 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
                                     () => {
                                         onOpenDeletePopup(item);
                                     }
-                                } /> <MdModeEdit className="ml-30" /> </SupplierTableLine>
+                                } /> <MdModeEdit className="ml-30" onClick={
+                                    () =>{
+                                        editOnClick(item);
+                                    }
+                                }/> </SupplierTableLine>
                                 <SupplierTableLine>{item.name}</SupplierTableLine>
                                 <SupplierTableLine>{item.email}</SupplierTableLine>
                                 <SupplierTableLine>{item.cnpj}</SupplierTableLine>
@@ -169,7 +193,11 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
                                         () => {
                                             onOpenDeletePopup(item);
                                         }
-                                    } /> <MdModeEdit className="ml-30" /></SupplierTableLine>
+                                    } /> <MdModeEdit className="ml-30" onClick={
+                                        () =>{
+                                            editOnClick(item);
+                                        }
+                                    }/></SupplierTableLine>
                                     <SupplierTableLine>{item.name}</SupplierTableLine>
                                     <SupplierTableLine>{item.email}</SupplierTableLine>
                                     <SupplierTableLine>{item.cnpj}</SupplierTableLine>
@@ -205,8 +233,10 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery }) => {
                     }} className="ml-10"><FaChevronRight /></button>
                 </div>
             </Pagination>
+                    
+            <CreateUpdateSupplierPopup isOpen={isCreateUpdateSupplierPopupOpen} onClose={onCloseCreateUpdateSupplierPopup} onConfirm={onConfirmCreateUpdateSupplierPopup} SourceSupplier={selectedItemUpdate}/>
 
-            <DeleteConfirm isOpen={isOpenDelete} onClose={onCloseDeletePopup} onConfirm={onConfirmDeletePopup}/>
+            <DeleteConfirm isOpen={isOpenDelete} onClose={onCloseDeletePopup} onConfirm={onConfirmDeletePopup} />
         </>
     )
 }

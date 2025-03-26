@@ -3,7 +3,7 @@ import { Supplier } from "../../../type/supplier";
 
 
 export default async function deleteSupplier(supplier: Supplier): Promise<any> {
-    const VITE_API_URL_SUPPLIERS_DELETE: string | undefined = import.meta.env.VITE_API_URL_SUPPLIERS + "/" + supplier.id + "/delete";
+    const VITE_API_URL_SUPPLIERS_DELETE: string | undefined = import.meta.env.VITE_API_URL_SUPPLIERS + "/" + supplier.id ;
 
     if (VITE_API_URL_SUPPLIERS_DELETE) {
         try {

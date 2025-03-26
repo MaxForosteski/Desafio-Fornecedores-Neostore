@@ -55,13 +55,15 @@ const ButtonNewSupplier = styled.button`
 const SupplierFilter: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [isCreateUpdateSupplierPopupOpen, setIsCreateUpdateSupplierPopupOpen] = useState(false);
+    const [isRefresh,setIsRefresh] = useState(false);
 
     function onCloseCreateUpdateSupplierPopup() {
-        
+        setIsCreateUpdateSupplierPopupOpen(false)
     }
 
     function onConfirmCreateUpdateSupplierPopup() {
-        
+        setIsCreateUpdateSupplierPopupOpen(false)
+        setIsRefresh(!isRefresh)
     }
 
     return (
@@ -77,10 +79,10 @@ const SupplierFilter: React.FC = () => {
                 <ButtonNewSupplier onClick={()=>{setIsCreateUpdateSupplierPopupOpen(true)}}><FaPlus className="mr-10" />Novo</ButtonNewSupplier>
             </Actions>
             <div className="mt-10">
-                <SupplierList searchQuery={searchQuery} />
+                <SupplierList isRefresh={isRefresh} searchQuery={searchQuery} />
             </div>
 
-            <CreateUpdateSupplierPopup isOpen={isCreateUpdateSupplierPopupOpen} onClose={onCloseCreateUpdateSupplierPopup} onConfirm={onConfirmCreateUpdateSupplierPopup} Supplier={null}/>
+            <CreateUpdateSupplierPopup isOpen={isCreateUpdateSupplierPopupOpen} onClose={onCloseCreateUpdateSupplierPopup} onConfirm={onConfirmCreateUpdateSupplierPopup} SourceSupplier={null}/>
 
         </SupplierListContainer>
     )

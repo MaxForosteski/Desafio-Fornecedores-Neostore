@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.List;
 import neostore.Supplier;
 import neostore.SupplierRepository;
@@ -32,7 +33,7 @@ public class SupplierService {
     
     public void createSupplierWrapper(Supplier supplier) {
         supplier.setIsActive(true);
-        supplier.setCreatedOn(Timestamp.from(Instant.now()));
+        supplier.setCreatedOn(ZonedDateTime.now());
         supplierRepository.createSupplier(supplier);
     }
     
