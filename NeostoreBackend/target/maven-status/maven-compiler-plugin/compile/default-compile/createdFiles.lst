@@ -1,9 +1,12 @@
-neostore\Supplier.class
+neostore\Email.class
 neostore\SupplierService.class
 neostore\JakartaEE11Resource.class
-neostore\CorsFilter.class
-neostore\SupplierDAO.class
-neostore\SupplierRepository.class
 neostore\CNPJ.class
 neostore\JakartaRestConfiguration.class
 neostore\SupplierResource.class
+neostore\EmailJpaConverter.class
+neostore\Supplier.class
+neostore\CorsFilter.class
+neostore\SupplierDAO.class
+neostore\SupplierRepository.class
+neostore\EmailAdapter.class

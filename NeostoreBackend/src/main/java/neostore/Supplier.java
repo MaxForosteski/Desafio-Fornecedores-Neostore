@@ -4,8 +4,8 @@
  */
 package neostore;
 
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
@@ -27,16 +27,18 @@ public class Supplier {
     @NotNull(message = "name cannot be null")
     private String name;
     
-    @Column(name = "email")
-    @Email(message = "Email must be valid")
-    @NotNull(message = "Email cannot be null")
-    private String email;
+    @Column(name = "email", nullable = false)
+    @Convert(converter = EmailJpaConverter.class)
+    @JsonbTypeAdapter(EmailAdapter.class)
+    private Email email;
     
     @Column(name = "description")
     private String description;
     
     @Column(name = "cnpj")
-    private String cnpj;
+    @Convert(converter = CNPJConverter.class)
+    @JsonbTypeAdapter(CNPJAdapter.class)
+    private CNPJ cnpj;
     
     @Column(name = "is_active",nullable = false)
     @NotNull(message = "IsActive cannot be null")
@@ -69,11 +71,11 @@ public class Supplier {
         this.name = name;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 
@@ -85,11 +87,11 @@ public class Supplier {
         this.description = description;
     }
 
-    public String getCnpj() {
+    public CNPJ getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
+    public void setCnpj(CNPJ cnpj) {
         this.cnpj = cnpj;
     }
 
@@ -116,10 +118,6 @@ public class Supplier {
     public void setUpdatedOn(ZonedDateTime UpdatedOn) {
         this.UpdatedOn = UpdatedOn;
     }
-    
-    
-    
-    
     
     
 }
