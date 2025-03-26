@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore.infrastructure.DAO;
+package neostore;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
@@ -15,8 +17,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import neostore.domain.Supplier.Supplier;
-import neostore.domain.Supplier.SupplierRepository;
+import neostore.Supplier;
+import neostore.SupplierRepository;
 
 /**
  *
@@ -25,9 +27,9 @@ import neostore.domain.Supplier.SupplierRepository;
 
 @ApplicationScoped
 public class SupplierDAO implements SupplierRepository{
-    
-    @PersistenceContext(unitName = "myPU")
-    private EntityManager em;
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPU");
+    private EntityManager em = emf.createEntityManager();
     
     private static final Logger LOGGER = Logger.getLogger(SupplierDAO.class.getName());
 
@@ -49,7 +51,10 @@ public class SupplierDAO implements SupplierRepository{
     @Override
     public List<Supplier> ListAllSupplier(){
         try{
-            return em.createQuery("SELECT s FROM Supplier s WHERE s.IsActive = true", Supplier.class).getResultList();
+            
+            List<Supplier> sup = em.createQuery("SELECT s FROM Supplier s WHERE s.isActive = true", Supplier.class).getResultList();
+            System.out.println(sup);
+            return sup;
         } catch (PersistenceException e){
             LOGGER.log(Level.SEVERE,"Failed to return the Suppliers list",e);            
             throw new RuntimeException("Failed to return the Suppliers list");

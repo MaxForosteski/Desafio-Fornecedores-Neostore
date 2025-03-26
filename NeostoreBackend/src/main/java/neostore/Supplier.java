@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore.domain.Supplier;
+package neostore;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -16,50 +16,43 @@ import neostore.domain.VO.CNPJ;
  */
 
 @Entity
-@Table(name = "Supplier")
+@Table(name = "supplier")
 public class Supplier {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id")
+    @Column(name="id")
     private Long id;
     
-    @Column(name = "Name", nullable = false, length = 100)
+    @Column(name = "name")
     @NotNull(message = "name cannot be null")
     private String name;
     
-    @Column(name = "Email", nullable = false, length = 100)
+    @Column(name = "email")
     @Email(message = "Email must be valid")
     @NotNull(message = "Email cannot be null")
     private String email;
     
-    @Column(name = "Description", nullable = true, length = 500)
+    @Column(name = "description")
     private String description;
     
-    @Column(name = "CNPJ", nullable = false, length = 17)
-    private CNPJ cnpj;
+    @Column(name = "cnpj")
+    private String cnpj;
     
-    @Column(name = "IsActive",nullable = false)
+    @Column(name = "is_active",nullable = false)
     @NotNull(message = "IsActive cannot be null")
     private boolean isActive;
     
-    @Column(name="CreatedOn", nullable = false)
+    @Column(name="created_on", nullable = false)
     @NotNull(message = "CreatedOn cannot be null")
     private Timestamp createdOn;
     
-    @Column(name="UpdatedOn", nullable = false)
+    @Column(name="updated_on", nullable = false)
     @NotNull(message = "UpdatedOn cannot be null")
     private Timestamp UpdatedOn;
 
-    public Supplier(Long id, String name, String email, String description, CNPJ cnpj, boolean isActive, Timestamp createdOn, Timestamp UpdatedOn) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.description = description;
-        this.cnpj = cnpj;
-        this.isActive = isActive;
-        this.createdOn = createdOn;
-        this.UpdatedOn = UpdatedOn;
+    public Supplier() {
+        
     }
 
     public Long getId() {
@@ -94,11 +87,11 @@ public class Supplier {
         this.description = description;
     }
 
-    public CNPJ getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(CNPJ cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
 
