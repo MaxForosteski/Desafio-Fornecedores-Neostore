@@ -4,6 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Supplier } from "../../../type/supplier";
+import process from "process";
 
 const SupplierTable = styled.table`
     width: 100%;
@@ -49,8 +50,9 @@ interface SupplierListProps{
     searchQuery: string;
 }
 
-const API_URL_GET_ALL_SUPPLIERS = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS;
 
+
+const VITE_API_URL_GET_ALL_SUPPLIERS: string | undefined = import.meta.env.VITE_API_URL_GET_ALL_SUPPLIERS;
 const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
     const [data, setData] = useState<Supplier[]>([]);
     const [filteredData, setFilteredData] = useState<Supplier[]>([]);
@@ -66,16 +68,20 @@ const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
     useEffect(() => {
         setMaxRecords(5);
 
-        axios
-            .get<Supplier[]>(API_URL_GET_ALL_SUPPLIERS)
+        if (VITE_API_URL_GET_ALL_SUPPLIERS) {
+            axios
+            .get<Supplier[]>(VITE_API_URL_GET_ALL_SUPPLIERS)
             .then((response) => {
-                setData(response.data)
-                setLoading(false)
+                setData(response.data);
+                setLoading(false);
             })
             .catch((error) => {
-                setError(error)
-                setLoading(false)
-            })
+                setError(error.message || "Erro ao carregar os dados");
+                setLoading(false);
+            });
+        } else {
+            setLoading(false);
+        }
     }
 
         , []);
@@ -133,7 +139,10 @@ const SupplierList: React.FC<SupplierListProps> = ({searchQuery}) => {
 
             <Pagination>
                 <div>
-                    {searchQuery == null ? <p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? data.length : (startIndex + maxRecord)} de {data.length} itens</p>:<p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? filteredData.length : (startIndex + maxRecord)} de {filteredData.length} itens</p>}
+                    {searchQuery == null ? 
+                    <p>{startIndex + 1} a {(startIndex + maxRecord) > data.length ? data.length : (startIndex + maxRecord)} de {data.length} itens</p>
+                    :
+                    <p>{startIndex + 1} a {(startIndex + maxRecord) > filteredData.length ? filteredData.length : (startIndex + maxRecord)} de {filteredData.length} itens</p>}
                 </div>
                 <div className="flex flex-row">
                     <button onClick={() => {
