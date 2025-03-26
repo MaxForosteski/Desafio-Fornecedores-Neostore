@@ -7,12 +7,24 @@
   justify-content: space-around;
 }
 
+.justify-space-between{
+  justify-content: space-between;
+}
+
+.mr-10{
+  margin-right: 10px;
+}
+
 .ml-5{
-  margin: 5px;
+  margin-left: 5px;
 }
 
 .ml-10{
   margin-left: 10px;
+}
+
+.mt-10{
+  margin-top: 10px;
 }
 
 .ml-30{
