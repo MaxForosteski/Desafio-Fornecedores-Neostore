@@ -12,14 +12,20 @@ Aplicação criada pensando na stack usada pela Neomind. Estudei, aprendi e apli
 - *Motivo:* Escolhi pensando na stack que a Neomind trabalha diariamente, alem disso, é uma stack bem robusta e confiavel para ser usada no backend, confiavel e validada pelo mercado
 - *Desafio:* O maior desafio que enfrentei nessa parte foi saber configurar o TomEE, demorei um pouco para entender como funcionava o Entity Manager e com isso gastei bastante tempo até funcionar de fato, fora isso, JPA/Hibernate e o CDI são conceitos mais faceis de entender e aplicar no código.
 - *Pontos a melhorar:* Estudar melhor a configuração de servidores TomEE
+
+  
 - **Frontend:** React, styled-components, React-icons e Axios
 - *Motivo:* Uma Stack mais nova no mercado, mas que é forte e muito pratica para construção de um frontend escalavel e dinamico.
 - *Desafio:* Não houveram muitos desafios durante o desenvolvimento, pois é uma stack que eu ja tenho certa experiência.
 - *Pontos a melhorar:* Entender melhorar como organizar os arquivos, nesse projeto também achei valido ter adicionado Tailwind ou Bootstrap, para diminuir a quantidade de classes css
+
+  
 - **Banco de Dados:** PostgreSQL  
 - *Motivo:* Um banco de dados que não tenho experiencia, e resolvi adicionar para me desafiar a aprender também
 - *Desafio* Entender as diferenças do seu uso, mas não gerou nenhum tipo de complicação no caminho
 - *Pontos a melhorar:* Estudar as melhores praticas para esse SGBD
+
+  
 - **Servidor de Aplicação:** Apache TomEE
 - *Motivo:* Durante a entrevista, ouvi que esse era o servidor que a Neomind mais utiliza para as aplicações, então resolvi usa-lo por esse motivo
 - *Desafio:* A configuração para utilização do JPA e o CDI foram meu maior desafio durante o periodo de desenvolvimento, sendo que por fim ainda tenho algumas duvidas sobre o funcionamento correto da aplicação usando o TomEE
