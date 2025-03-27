@@ -6,6 +6,9 @@ Bem-vindo ao **NeoStore**, um sistema full stack para gerenciamento de fornecedo
 NeoStore é uma aplicação desenvolvida com **Jakarta EE 10** no backend e **React** no frontend, utilizando **PostgreSQL** como banco de dados. O objetivo é facilitar o gerenciamento de fornecedores.
 
 Aplicação criada pensando na stack usada pela Neomind. Estudei, aprendi e apliquei o uso de diversas tecnologias incomuns ao meu dia-a-dia, apesar de complicações com a configurações dos ambientes. A seguir vou apresentar as tecnologias e falar um pouco da minha escolha e desafios que tive ao usar.
+A aplicação foi construida pensando na escalabilidade, usando das camadas da arquitetura limpa e principios do Domain Driven Desing, foram construidos testes para validar o funcionamento e por fim iria ser construido um docker compose para acelerar e facilitar a execução do projeto.
+
+Por fim algumas funções não ficaram completas por que chegou ao fim do prazo.
 
 ## 🛠️ Tecnologias Utilizadas
 - **Backend:** Jakarta EE 10, TomEE, OpenJPA, Hibernate
@@ -50,6 +53,7 @@ Antes de instalar o projeto, certifique-se de ter os seguintes softwares instala
    <property name="jakarta.persistence.jdbc.user" value="seu_usuario"/>
    <property name="jakarta.persistence.jdbc.password" value="sua_senha"/>
    ```
+Necessario criar o Resource no Tomee,xml do servidor.
 
 ### **3. Rodando o Backend**
 1. Compile e inicie o backend:
