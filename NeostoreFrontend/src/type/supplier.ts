@@ -6,5 +6,6 @@ export interface Supplier {
     cnpj: string;          
     isActive?: boolean;    
     createdOn: string;     
-    updateOn?: string;     
+    updateOn?: string;    
+
   }

@@ -1,4 +1,4 @@
-package neostore;
+package neostore.infrastructure.rest.config;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

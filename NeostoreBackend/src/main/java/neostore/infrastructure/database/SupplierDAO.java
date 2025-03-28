@@ -1,5 +1,6 @@
-package neostore;
+package neostore.infrastructure.database;
 
+import neostore.domain.entity.Supplier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -13,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import neostore.domain.repository.SupplierRepository;
 
 @RequestScoped
 public class SupplierDAO implements SupplierRepository {

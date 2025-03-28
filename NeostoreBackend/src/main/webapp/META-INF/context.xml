@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Context path="neostore"/>
-
+<Context path="neostore">
+    <Resource name="NeostoreDatasource"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/neostore_db"
+              username="postgres"
+              password="postgres"
+              maxTotal="20"
+              maxIdle="10"
+              maxWaitMillis="30000"/>
+</Context>

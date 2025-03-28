@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore;
+package neostore.infrastructure.rest.interfaces;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -10,8 +10,12 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
-import neostore.SupplierService;
-import neostore.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import neostore.application.SupplierService;
+import neostore.application.SupplierService;
+import neostore.domain.entity.Supplier;
+import neostore.domain.vo.CNPJ;
 
 /**
  *
@@ -23,8 +27,12 @@ import neostore.Supplier;
 @RequestScoped
 public class SupplierResource {
 
+    private static final Logger LOGGER = Logger.getLogger("Resoruce");
+    
     @Inject
     private SupplierService supplierService;
+    
+     
 
     @GET
     @Path("/teste")

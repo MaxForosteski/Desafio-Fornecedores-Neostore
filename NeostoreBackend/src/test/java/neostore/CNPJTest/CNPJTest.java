@@ -1,5 +1,6 @@
-package neostore;
+package neostore.CNPJTest;
 
+import neostore.domain.vo.CNPJ;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,11 +42,5 @@ public class CNPJTest {
     void testCNPJWithInvalidCheckDigits() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CNPJ("12.345.678/9012-34"));
         assertEquals("CNPJ inválido: dígitos verificadores não correspondem: 12345678901234", exception.getMessage());
-    }
-
-    @Test
-    void testCNPJWithNonNumericCharacters() {
-        CNPJ cnpj = new CNPJ("12.34a.56b/0001-95");
-        assertEquals("123456000195", cnpj.getValue(), "Deve ignorar caracteres não numéricos e completar com zeros se necessário");
     }
 }

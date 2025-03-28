@@ -107,7 +107,7 @@ const CreateUpdateSupplierPopup: React.FC<ConfirmModalProps> = ({ isOpen, onClos
   }
 
   function Confirm() {
-    if (supplier) {
+    if (supplier && (supplier.cnpj && supplier.name && supplier.email)) {
       if (supplier.id == null) {
         createSupplier(supplier)
           .then(() => {
@@ -118,20 +118,20 @@ const CreateUpdateSupplierPopup: React.FC<ConfirmModalProps> = ({ isOpen, onClos
             console.error('Erro ao salvar fornecedor:', error);
             alert('Ocorreu um erro ao salvar o fornecedor. Tente novamente.');
           });
-      }else{
+      } else {
         updateSupplier(supplier)
-        .then(() => {
-          alert('Fornecedor salvo com sucesso!');
-          onConfirm();
-        })
-        .catch((error) => {
-          console.error('Erro ao salvar fornecedor:', error);
-          alert('Ocorreu um erro ao salvar o fornecedor. Tente novamente.');
-        });
+          .then(() => {
+            alert('Fornecedor salvo com sucesso!');
+            onConfirm();
+          })
+          .catch((error) => {
+            console.error('Erro ao salvar fornecedor:', error);
+            alert('Ocorreu um erro ao salvar o fornecedor. Tente novamente.');
+          });
       }
 
     } else {
-      alert('Preencha os dados do fornecedor antes de salvar.');
+      alert('Preencha todos os campos obrigatórios: Nome, Email e CNPJ');
     }
     onConfirm
   }
@@ -152,12 +152,12 @@ const CreateUpdateSupplierPopup: React.FC<ConfirmModalProps> = ({ isOpen, onClos
           <div className="">
             <InputGroup >
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '40%' }}>
-                <InputLabel><label htmlFor="name">Nome</label></InputLabel>
+                <InputLabel><label htmlFor="name">Nome*</label></InputLabel>
                 <Input onChange={(e) => setSupplier({ ...supplier, name: e.target.value } as Supplier)} value={supplier?.name} type="text" id="name" name="name" />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '50%' }}>
-                <InputLabel htmlFor="email">Email</InputLabel>
+                <InputLabel htmlFor="email">Email*</InputLabel>
                 <Input onChange={(e) => setSupplier({ ...supplier, email: e.target.value } as Supplier)} value={supplier?.email} type="email" id="email" name="email" />
               </div>
             </InputGroup>
@@ -169,7 +169,7 @@ const CreateUpdateSupplierPopup: React.FC<ConfirmModalProps> = ({ isOpen, onClos
 
             <InputGroup>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '30%' }}>
-                <InputLabel htmlFor="cnpj">CNPJ</InputLabel>
+                <InputLabel htmlFor="cnpj">CNPJ*</InputLabel>
                 <Input onChange={(e) => setSupplier({ ...supplier, cnpj: e.target.value } as Supplier)} value={supplier?.cnpj} type="text" id="cnpj" name="cnpj" />
               </div>
 

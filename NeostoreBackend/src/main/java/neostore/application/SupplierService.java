@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore;
+package neostore.application;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -12,8 +12,10 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
-import neostore.Supplier;
-import neostore.SupplierRepository;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import neostore.domain.entity.Supplier;
+import neostore.domain.repository.SupplierRepository;
 
 /**
  *
@@ -25,14 +27,12 @@ public class SupplierService {
     @Inject
     private SupplierRepository supplierRepository;
     
-    @Inject
     
+    @Inject
     public void createSupplierWrapper(Supplier supplier) {
-        
             supplier.setIsActive(true);
             supplier.setCreatedOn(ZonedDateTime.now());
             supplierRepository.createSupplier(supplier);
-        
     }
 
     public Supplier getSupplierByIdWrapper(Long id) {

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package neostore;
+package neostore.infrastructure.json;
 
+import neostore.domain.vo.Email;
 import jakarta.json.bind.adapter.JsonbAdapter;
 
 /**

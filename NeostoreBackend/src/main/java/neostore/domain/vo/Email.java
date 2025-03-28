@@ -1,4 +1,4 @@
-package neostore;
+package neostore.domain.vo;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -11,12 +11,13 @@ public class Email {
     private final String value;
 
     public Email(String value) {
-        String cleanEmail = value.replaceAll("\\s+", ""); //Limpa todos os espaços em branco
-        if (cleanEmail == null) {
-            throw new IllegalArgumentException("Email can't be null");
+        if (value == null) {
+            throw new IllegalArgumentException("Invalid Email: null");
         }
+        String cleanEmail = value.replaceAll("\\s+", ""); //Limpa todos os espaços em branco
+        
         if (!EMAIL_PATTERN.matcher(cleanEmail).matches()) {
-            throw new IllegalArgumentException("Invalid Email:" + value);
+            throw new IllegalArgumentException("Invalid Email: " + value);
         }
         
         this.value = cleanEmail;

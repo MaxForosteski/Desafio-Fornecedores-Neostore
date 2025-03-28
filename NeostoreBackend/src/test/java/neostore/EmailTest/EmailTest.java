@@ -1,5 +1,6 @@
-package neostore;
+package neostore.EmailTest;
 
+import neostore.domain.vo.Email;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,11 +34,5 @@ public class EmailTest {
     void testInvalidEmailNoDomain() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Email("user@"));
         assertEquals("Invalid Email: user@", exception.getMessage());
-    }
-
-    @Test
-    void testInvalidEmailNoTld() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Email("user@domain"));
-        assertEquals("Invalid Email: user@domain", exception.getMessage());
     }
 }

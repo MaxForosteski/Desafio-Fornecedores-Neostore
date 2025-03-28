@@ -1,5 +1,7 @@
-package neostore;
+package neostore.domain.vo;
 
+import jakarta.json.bind.annotation.JsonbCreator;
+import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.Objects;
 
 public class CNPJ {
@@ -7,7 +9,8 @@ public class CNPJ {
     private static final int[] PESOS_SEGUNDO_DIGITO = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
     private final String value;
-
+    
+    
     public CNPJ(String value) {
         String cleanedValue = cleanInput(value);
         validate(cleanedValue);
@@ -67,7 +70,6 @@ public class CNPJ {
         return (resto < 2) ? 0 : 11 - resto;
     }
 
-    
     public String getValue() {
         return value;
     }

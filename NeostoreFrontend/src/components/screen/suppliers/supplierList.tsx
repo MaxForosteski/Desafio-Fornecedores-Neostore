@@ -137,7 +137,7 @@ const SupplierList: React.FC<SupplierListProps> = ({ searchQuery, isRefresh }) =
 
     useEffect(() => {
         const filtered = data.filter(data =>
-            data.name.toLowerCase().includes(searchQuery.toLowerCase())
+            data.name?.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredData(filtered)
     }, [searchQuery, data])

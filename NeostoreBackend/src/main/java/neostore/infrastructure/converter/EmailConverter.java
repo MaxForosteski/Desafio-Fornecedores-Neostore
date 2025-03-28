@@ -1,6 +1,7 @@
 
-package neostore;
+package neostore.infrastructure.converter;
 
+import neostore.domain.vo.Email;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
@@ -9,7 +10,7 @@ import jakarta.persistence.Converter;
  * @author max.silva
  */
 @Converter(autoApply = true)
-public class EmailJpaConverter implements AttributeConverter<Email, String>{
+public class EmailConverter implements AttributeConverter<Email, String>{
     @Override
     public String convertToDatabaseColumn(Email email){
         return email != null ? email.getValue() : null;

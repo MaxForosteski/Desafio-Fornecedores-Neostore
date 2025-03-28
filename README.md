@@ -1,6 +1,6 @@
 # NeoStore
 
-Bem-vindo ao **NeoStore**, um sistema full stack para gerenciamento de fornecedores e produtos.
+Bem-vindo ao **NeoStore**, um sistema full stack para gerenciamento de fornecedores.
 
 ## 🚀 Sobre o Projeto
 NeoStore é uma aplicação desenvolvida com **Jakarta EE 10** no backend e **React** no frontend, utilizando **PostgreSQL** como banco de dados. O objetivo é facilitar o gerenciamento de fornecedores.
@@ -9,6 +9,11 @@ Aplicação criada pensando na stack usada pela Neomind. Estudei, aprendi e apli
 A aplicação foi construida pensando na escalabilidade, usando das camadas da arquitetura limpa e principios do Domain Driven Desing, foram construidos testes para validar o funcionamento e por fim iria ser construido um docker compose para acelerar e facilitar a execução do projeto.
 
 Por fim algumas funções não ficaram completas por que chegou ao fim do prazo.
+
+Entre elas teve: 
+   A função de importação de Fornecedores via JSON, tendo pronto so a parte do servidor;
+   A validação dos campos de CNPJ e Email estão prontas, porem não consegui configuarar os Objects Values nos campos do JPA;
+
 
 ## 🛠️ Tecnologias Utilizadas
 - **Backend:** Jakarta EE 10, TomEE, OpenJPA, Hibernate
@@ -45,15 +50,21 @@ Antes de instalar o projeto, certifique-se de ter os seguintes softwares instala
 ### **2. Configuração do Banco de Dados**
 1. Crie o banco de dados:
    ```sql
-   CREATE DATABASE neostore;
+   CREATE DATABASE neostore_db;
    ```
-2. Ajuste as configurações de conexão no arquivo `persistence.xml`:
+2. Ajuste as configurações de conexão no arquivo `context.xml`:
    ```xml
-   <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/neostore"/>
-   <property name="jakarta.persistence.jdbc.user" value="seu_usuario"/>
-   <property name="jakarta.persistence.jdbc.password" value="sua_senha"/>
+   <Resource name="NeostoreDatasource"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/neostore_db"
+              username="postgres"
+              password="postgres" 
+              maxTotal="20"
+              maxIdle="10"
+              maxWaitMillis="30000"/>
    ```
-Necessario criar o Resource no Tomee,xml do servidor.
 
 ### **3. Rodando o Backend**
 1. Compile e inicie o backend:
